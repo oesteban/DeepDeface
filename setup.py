@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name="deepdefacer",
     packages=['deepdefacer'],
-    version="1.0.3",
+    version="1.0.4",
     author="Anish Khazane",
     author_email="akhazane@stanford.edu",
     description="Automatic Removal of Facial Features from MRI Images",
@@ -26,8 +26,8 @@ setup(
     ],
     install_requires=[
         "numpy",
-        "keras==2.2.2",
-        "tensorflow-gpu==1.8.0",
+        "keras>=2.2.2",
+        "tensorflow-gpu>=1.8.0",
         "nilearn",
         "nibabel",
         "sklearn",
