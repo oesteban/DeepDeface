@@ -13,7 +13,11 @@ except:
 
 from nilearn.image import resample_img
 
-def resize_img(img,target_shape,mask=False, pad=False):
+
+def nearest_multiple(num):
+    return int( 16 * round( num / 16. ))
+
+def resize_img(img,mask=False, orig=None,pad=False):
     ''' Resample image to specified target shape '''
     # Define interpolation method
     interp = 'nearest' if mask else 'continuous'
@@ -35,9 +39,15 @@ def resize_img(img,target_shape,mask=False, pad=False):
                                     target_shape=target_shape,
                                     interpolation=interp)
     else: # padded/cropped image
-        reshaped_img = resample_img(img, 
+        if not orig:
+            new_shape = [nearest_multiple(val) for val in img.shape]
+            new_shape = tuple(new_shape) 
+        else:
+            new_shape = orig
+
+        reshaped_img = resample_img(img,
                                     target_affine=img.affine,
-                                    target_shape=target_shape,
+                                    target_shape=new_shape,
                                     interpolation=interp)
     return reshaped_img
 
@@ -50,9 +60,9 @@ def dice_coefficient(y_true, y_pred, smooth=1.):
     return (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
 
 
-def resample_image(img_data, target_shape, get_nifti=False):
+def resample_image(img_data, orig=None, get_nifti=False):
 
-    img = resize_img(img_data, target_shape=target_shape, mask=False, pad=True) #resample. 
+    img = resize_img(img_data, orig=orig, mask=False, pad=True) #resample. 
 
     if get_nifti:
         return img 
@@ -61,10 +71,13 @@ def resample_image(img_data, target_shape, get_nifti=False):
 
 
 def pre_process_image(img_file):
- 
-    nifti_image = nib.load(img_file)
 
-    img_data = resample_image(nifti_image, (256,320,256)) 
+ 
+    nifti_data = np.squeeze(nib.load(img_file).get_data())
+
+    squeeze_nifti = nib.Nifti1Image(nifti_data, nib.load(img_file).affine)
+
+    img_data = resample_image(squeeze_nifti) 
 
     resamp_img = np.squeeze(img_data.astype(np.float32))
 

@@ -1,7 +1,6 @@
 import argparse
 import sys 
 import os
-
 import numpy as np 
 import nibabel as nib
 
@@ -39,9 +38,9 @@ def deface_3D_MRI():
 
     print('Preproessing input MRI image...')
 
-    MRI_image_shape = nib.load(MRI_image_path).get_data().shape
+    MRI_image_shape = np.squeeze(nib.load(MRI_image_path).get_data()).shape
 
-    if len(np.squeeze(MRI_image_shape)) != 3: 
+    if len(MRI_image_shape) != 3: 
         print('------------------------------------------------------------------------')
         print("ERROR: Unable to deface MRI: Please ensure that input dimensions are in 3D.")
         print('------------------------------------------------------------------------')
@@ -66,7 +65,7 @@ def deface_3D_MRI():
 
     masked_image_save = nib.Nifti1Image(masked_image, nib.load(MRI_image_path).affine)
  
-    masked_image_resampled = resample_image(masked_image_save, target_shape=MRI_image_shape, get_nifti=True)
+    masked_image_resampled = resample_image(masked_image_save, orig=MRI_image_shape, get_nifti=True)
 
     output_file = os.path.splitext(os.path.splitext(os.path.basename(MRI_image_path))[0])[0] + '_defaced.nii.gz'
 
