@@ -1,6 +1,5 @@
 import numpy as np
 import nibabel as nib
-import pdb
 
 try:
     from keras import backend as K
