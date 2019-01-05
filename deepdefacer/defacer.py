@@ -2,6 +2,7 @@ import os
 import sys
 import numpy as np
 import nibabel as nib
+import pdb
 
 try:
     from keras.models import *
@@ -28,11 +29,9 @@ def deface_3D_MRI():
         print('---------------------------------------------------------------------------------------------------------------------------------------')
         print("WARNING: Could not find an available GPU on your system. Defaulting to CPU.")
         print('---------------------------------------------------------------------------------------------------------------------------------------')
-        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID" 
-        os.environ['CUDA_VISIBLE_DEVICES'] = '-1' 
-        sys.exit(1)
 
     MRI_image_path = sys.argv[1]
+    pdb.set_trace()
     if '.nii' not in MRI_image_path or '.nii.gz' not in MRI_image_path:
         print('------------------------------------------------------------------------')
         print("ERROR: Please ensure that the input MRI file is in .nii or .nii.gz format")
