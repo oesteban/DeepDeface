@@ -9,7 +9,8 @@ pdb.set_trace()
 from keras.model import * 
 try:
     from keras.models import *
-except:
+except Exception as e:
+    print(e)
     print('---------------------------------------------------------------------------------------------------------------------------------------')
     print('ERROR: Failed to initialize tensorflow and Keras. If you are using deepdefacer[tf-gpu], please make sure that your CUDA and NVIDIA drivers are properly installed.')
     print('---------------------------------------------------------------------------------------------------------------------------------------')
