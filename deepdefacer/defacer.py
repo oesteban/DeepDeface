@@ -2,11 +2,7 @@ import os
 import sys
 import numpy as np
 import nibabel as nib
-import pdb
 
-pdb.set_trace() 
-
-from keras.model import * 
 try:
     from keras.models import *
 except Exception as e:
