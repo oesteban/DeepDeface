@@ -11,7 +11,7 @@ try:
     from keras.models import *
 except:
     print('---------------------------------------------------------------------------------------------------------------------------------------')
-    print('ERROR: Failed to initialize tensorflow-gpu and Keras. Please ensure that this module is installed and a GPU is readily accessible.')
+    print('ERROR: Failed to initialize tensorflow and Keras. If you are using deepdefacer[tf-gpu], please make sure that your CUDA and NVIDIA drivers are properly installed.')
     print('---------------------------------------------------------------------------------------------------------------------------------------')
     sys.exit(1)
 
@@ -29,7 +29,7 @@ def deface_3D_MRI():
 
     if not get_available_gpus():
         print('---------------------------------------------------------------------------------------------------------------------------------------')
-        print("WARNING: Could not find an available GPU on your system. Defaulting to CPU")
+        print("WARNING: Could not find an available GPU on your system. Defaulting to CPU.")
         print('---------------------------------------------------------------------------------------------------------------------------------------')
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID" 
         os.environ['CUDA_VISIBLE_DEVICES'] = '-1' 
@@ -38,7 +38,7 @@ def deface_3D_MRI():
     MRI_image_path = sys.argv[1]
     if '.nii' not in MRI_image_path or '.nii.gz' not in MRI_image_path:
         print('------------------------------------------------------------------------')
-        print("ERROR: Please ensure that input MRI file is in .nii or .nii.gz format")
+        print("ERROR: Please ensure that the input MRI file is in .nii or .nii.gz format")
         print('------------------------------------------------------------------------')
 
     print('Preproessing input MRI image...')
@@ -47,7 +47,7 @@ def deface_3D_MRI():
 
     if len(MRI_image_shape) != 3:
         print('------------------------------------------------------------------------')
-        print("ERROR: Unable to deface MRI: Please ensure that input dimensions are in 3D.")
+        print("ERROR: Unable to deface MRI: Please ensure that input dimensions are 3D.")
         print('------------------------------------------------------------------------')
 
     MRI_image_data, MRI_unnormalized_data = pre_process_image(MRI_image_path)
