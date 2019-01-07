@@ -13,7 +13,7 @@ except Exception as e:
     print('---------------------------------------------------------------------------------------------------------------------------------------')
     sys.exit(1)
 
-from defacer_utils import resize_img, dice_coefficient, resample_image, pre_process_image, get_available_gpus
+from defacer_utils import resize_img, dice_coefficient, resize_img, pre_process_image, get_available_gpus, check_for_resampling
 
 
 def deface_3D_MRI():
@@ -25,12 +25,14 @@ def deface_3D_MRI():
         print('----------------------------------------------------------------------------------------------------')
         sys.exit(1)
 
+    pdb.set_trace()
     if not get_available_gpus():
         print('---------------------------------------------------------------------------------------------------------------------------------------')
         print("WARNING: Could not find an available GPU on your system. Defaulting to CPU.")
         print('---------------------------------------------------------------------------------------------------------------------------------------')
 
     MRI_image_path = sys.argv[1]
+    resampling_required = check_for_resampling(MRI_image_path)
     pdb.set_trace()
     if '.nii' not in MRI_image_path or '.nii.gz' not in MRI_image_path:
         print('------------------------------------------------------------------------')
@@ -61,13 +63,22 @@ def deface_3D_MRI():
 
     mask_prediction = np.squeeze(mask_prediction)
 
+    if resampling_required:
+        mask_prediction = resize_img(mask_prediction, orig=(MRI_image_path))
+        MRI_unnormalized_data = np.squeeze(nib.load(MRI_image_path).get_data())
+
     masked_image = np.multiply(MRI_unnormalized_data, mask_prediction)
 
     masked_image_save = nib.Nifti1Image(
         masked_image, nib.load(MRI_image_path).affine)
 
-    masked_image_resampled = resample_image(
-        masked_image_save, orig=MRI_image_shape, get_nifti=True)
+    if not resampling_required:
+
+        masked_image_resampled = resample_image(
+            masked_image_save, orig=MRI_image_shape, get_nifti=True)
+
+    else:
+        masked_image_resampled = masked_image_save
 
     output_file = os.path.splitext(os.path.splitext(
         os.path.basename(MRI_image_path))[0])[0] + '_defaced.nii.gz'
