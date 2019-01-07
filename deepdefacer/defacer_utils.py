@@ -1,6 +1,9 @@
 import numpy as np
 import nibabel as nib
 import SimpleITK as sitk
+import pdb
+import math 
+import os
 
 try:
     from keras import backend as K
@@ -14,14 +17,14 @@ except:
 
 from nilearn.image import resample_img
 
-DIM_CHECK = 300
+DIM_CHECK = 200
 
 def nearest_multiple(num):
-    return int(16 * round(num / 16.))
+    return int(16 * math.ceil(num / 16.))
 
 
-def check_for_resampling(nifti_image):
-    if all(dim <= DIM_CHECK for dim in nifti_image.shape):
+def check_for_resampling(nifti_shape):
+    if all(dim > DIM_CHECK for dim in nifti_shape):
         return True 
     return False
 
@@ -51,9 +54,9 @@ def dice_coefficient(y_true, y_pred, smooth=1.):
     return (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
 
 
-def resize_img(img_data, orig=None, get_nifti=False):
+def resize_img(img_data, orig=None, mask=False, get_nifti=False):
 
-    img = pad_img(img_data, orig=orig, mask=False, pad=True)  # resample.
+    img = pad_img(img_data, orig=orig, mask=mask, pad=True)  # resample.
 
     if get_nifti:
         return img
@@ -61,16 +64,27 @@ def resize_img(img_data, orig=None, get_nifti=False):
     return img.get_data()
 
 
-def resample_image(nifti_img):
-    """
-    Credits: Ziv Yaniv, https://gist.github.com/zivy/79d7ee0490faee1156c1277a78e4a4c4
+def resample_image(nifti_img, specified_shape, mask=False):
 
-    """
-    
-    target_shape = [dim/2 for dim in nifti_img.shape] 
+    if mask:
+        revised_nifti = nib.Nifti1Image(nifti_img, np.eye(4)) 
+        nib.save(revised_nifti, 'mask_intermediate.nii.gz')
+        nifti_img = 'mask_intermediate.nii.gz'
 
     img = sitk.ReadImage(nifti_img)
-    shape = np.squeeze(sitk.GetArrayFromImage(img)).shape
+    img_data = sitk.GetArrayFromImage(img)
+
+    if len(img_data.shape) != 3:
+
+        img_data = np.squeeze(img_data) 
+        revised_nifti = nib.Nifti1Image(img_data, nib.load(nifti_img).affine) 
+        nib.save(revised_nifti, nifti_img) 
+        img = sitk.ReadImage(nifti_img)
+
+
+    shape = img_data.shape
+    dimension = img.GetDimension() 
+    target_shape = specified_shape
 
     reference_physical_size = np.zeros(dimension)
     reference_physical_size[:] = [(sz-1)*spc if sz*spc>mx  else mx for sz,spc,mx in zip(img.GetSize(), img.GetSpacing(), reference_physical_size)]
@@ -98,7 +112,10 @@ def resample_image(nifti_img):
     centered_transform.AddTransform(centering_transform)
 
     resampled_img_data = sitk.Resample(img, reference_image, centered_transform, sitk.sitkLinear, 0.0)
-    resampled_img_data = np.swapaxes(sitk.GetArrayFromImage(new_img), 0, -1) 
+    resampled_img_data = np.swapaxes(sitk.GetArrayFromImage(resampled_img_data), 0, -1) 
+
+    if mask:
+        os.remove('mask_intermediate.nii.gz')
 
     return resampled_img_data
 
@@ -107,20 +124,20 @@ def pre_process_image(img_file):
 
     nifti_data = np.squeeze(nib.load(img_file).get_data())
 
-    if check_for_resampling(nifti_data):
 
-        # downsample image by 1/2 to optimize spatial locality.
+    if check_for_resampling(nifti_data.shape):
 
-        resamp_img = resample_image(img_file, target_shape) 
-        resamp_img = np.squeeze(img_data.astype(np.float32))
+        optimal_dims = [nearest_multiple(dim/2) for dim in nifti_data.shape]
+
+        img_data = resample_image(img_file, optimal_dims) 
 
     else:
 
         squeeze_nifti = nib.Nifti1Image(nifti_data, nib.load(img_file).affine)
 
         img_data = resize_img(squeeze_nifti)
-
-        resamp_img = np.squeeze(img_data.astype(np.float32))
+    
+    resamp_img = img_data.astype(np.float32)
 
     img_data = np.expand_dims(resamp_img, axis=0)
 

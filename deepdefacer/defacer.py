@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import nibabel as nib
 import pdb
+import os
 
 try:
     from keras.models import *
@@ -13,7 +14,7 @@ except Exception as e:
     print('---------------------------------------------------------------------------------------------------------------------------------------')
     sys.exit(1)
 
-from defacer_utils import resize_img, dice_coefficient, resize_img, pre_process_image, get_available_gpus, check_for_resampling
+from defacer_utils import resize_img, dice_coefficient, resize_img, pre_process_image, get_available_gpus, check_for_resampling, resample_image
 
 
 def deface_3D_MRI():
@@ -25,23 +26,22 @@ def deface_3D_MRI():
         print('----------------------------------------------------------------------------------------------------')
         sys.exit(1)
 
-    pdb.set_trace()
     if not get_available_gpus():
         print('---------------------------------------------------------------------------------------------------------------------------------------')
         print("WARNING: Could not find an available GPU on your system. Defaulting to CPU.")
         print('---------------------------------------------------------------------------------------------------------------------------------------')
 
     MRI_image_path = sys.argv[1]
-    resampling_required = check_for_resampling(MRI_image_path)
-    pdb.set_trace()
-    if '.nii' not in MRI_image_path or '.nii.gz' not in MRI_image_path:
+    if '.nii' not in MRI_image_path and '.nii.gz' not in MRI_image_path:
         print('------------------------------------------------------------------------')
         print("ERROR: Please ensure that the input MRI file is in .nii or .nii.gz format")
         print('------------------------------------------------------------------------')
+        sys.exit(1) 
 
     print('Preproessing input MRI image...')
 
     MRI_image_shape = np.squeeze(nib.load(MRI_image_path).get_data()).shape
+    resampling_required = check_for_resampling(MRI_image_shape)
 
     if len(MRI_image_shape) != 3:
         print('------------------------------------------------------------------------')
@@ -50,8 +50,9 @@ def deface_3D_MRI():
 
     MRI_image_data, MRI_unnormalized_data = pre_process_image(MRI_image_path)
 
+
     deepdeface_model = load_model(
-        'deepdefacer/model.hdf5', custom_objects={'dice_coefficient': dice_coefficient})
+        'model.hdf5', custom_objects={'dice_coefficient': dice_coefficient})
 
     print('-------------------------------------------------')
     print('Masking %s ....' % (MRI_image_path))
@@ -64,7 +65,7 @@ def deface_3D_MRI():
     mask_prediction = np.squeeze(mask_prediction)
 
     if resampling_required:
-        mask_prediction = resize_img(mask_prediction, orig=(MRI_image_path))
+        mask_prediction = resample_image(mask_prediction, specified_shape=MRI_image_shape, mask=True)
         MRI_unnormalized_data = np.squeeze(nib.load(MRI_image_path).get_data())
 
     masked_image = np.multiply(MRI_unnormalized_data, mask_prediction)
@@ -74,7 +75,7 @@ def deface_3D_MRI():
 
     if not resampling_required:
 
-        masked_image_resampled = resample_image(
+        masked_image_resampled = resize_img(
             masked_image_save, orig=MRI_image_shape, get_nifti=True)
 
     else:
@@ -89,3 +90,7 @@ def deface_3D_MRI():
 
     print('Saved.')
     print('----------')
+
+
+if __name__ == "__main__":
+    deface_3D_MRI() 
