@@ -64,22 +64,16 @@ def deface_3D_MRI():
 
     mask_prediction = np.squeeze(mask_prediction)
 
-    if resampling_required:
-        mask_prediction = resample_image(mask_prediction, specified_shape=MRI_image_shape, mask=True)
-        MRI_unnormalized_data = np.squeeze(nib.load(MRI_image_path).get_data())
+    # if resampling_required:
+    mask_prediction = resample_image(mask_prediction, specified_shape=MRI_image_shape, mask=True)
+    MRI_unnormalized_data = np.squeeze(nib.load(MRI_image_path).get_data())
 
     masked_image = np.multiply(MRI_unnormalized_data, mask_prediction)
 
     masked_image_save = nib.Nifti1Image(
         masked_image, nib.load(MRI_image_path).affine)
 
-    if not resampling_required:
-
-        masked_image_resampled = resize_img(
-            masked_image_save, orig=MRI_image_shape, get_nifti=True)
-
-    else:
-        masked_image_resampled = masked_image_save
+    masked_image_resampled = masked_image_save
 
     output_file = os.path.splitext(os.path.splitext(
         os.path.basename(MRI_image_path))[0])[0] + '_defaced.nii.gz'
