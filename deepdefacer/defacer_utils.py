@@ -125,17 +125,17 @@ def pre_process_image(img_file):
     nifti_data = np.squeeze(nib.load(img_file).get_data())
 
 
-    if check_for_resampling(nifti_data.shape):
+    # if check_for_resampling(nifti_data.shape):
 
-        optimal_dims = [nearest_multiple(dim/2) for dim in nifti_data.shape]
+    optimal_dims = [nearest_multiple(dim/2) for dim in nifti_data.shape]
 
-        img_data = resample_image(img_file, optimal_dims) 
+    img_data = resample_image(img_file, optimal_dims) 
 
-    else:
+    # else:
 
-        squeeze_nifti = nib.Nifti1Image(nifti_data, nib.load(img_file).affine)
+    #     squeeze_nifti = nib.Nifti1Image(nifti_data, nib.load(img_file).affine)
 
-        img_data = resize_img(squeeze_nifti)
+    #     img_data = resize_img(squeeze_nifti)
     
     resamp_img = img_data.astype(np.float32)
 
