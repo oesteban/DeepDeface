@@ -91,7 +91,7 @@ def resample_image(nifti_img, specified_shape, mask=False):
 
     reference_origin = np.zeros(dimension)
     reference_direction = np.identity(dimension).flatten()
-    reference_size = target_shape # Arbitrary sizes, smallest size that yields desired results. 
+    reference_size = [160, 160, 160] # Arbitrary sizes, smallest size that yields desired results. 
     reference_spacing = [ phys_sz/(sz-1) for sz,phys_sz in zip(reference_size, reference_physical_size)]
 
     reference_image = sitk.Image(reference_size, img.GetPixelIDValue())
