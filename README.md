@@ -23,7 +23,7 @@ If you use any of the model logic from the [ARFF-CNN](https://github.com/AKhazan
 
 ### Installation and Usage
 
-Deepdefacer can easily be installed on any operating system via Pypi. There are two versions of this package - one for CPU support, and another for GPU support. Please enter *either* of the following commands into your terminal window to begin installation, depending on your computer requirements. 
+Deepdefacer can be easily installed on any operating system via Pypi. There are two versions of this package - one for CPU support, and another for GPU support. Please enter *either* of the following commands into your terminal window to begin installation, depending on your computer requirements. 
 
 CPU Support
 ```
