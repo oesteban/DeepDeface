@@ -42,7 +42,7 @@ pip install deepdefacer[tf_gpu] / pip3 install deepdefacer[tf_gpu]
 
 **Note: If you are using a ZSH-type shell, you may need to wrap the package name in quotations in order to successfully initiate the Pip installation. (e.g ```pip install "deepdefacer[...]"```).**
 
-### Usage and Examples
+### Usage and Documentation
 
 Once installed, please enter ```deepdefacer --help``` into your terminal window to see a list of available tools within this program. Defacing a 3D MRI image is extremely simple, and can be done with the following command:
 
