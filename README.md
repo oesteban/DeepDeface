@@ -20,6 +20,7 @@ If you use any of the architecture code from the [ARFF-CNN](https://github.com/A
 
 * Any Python version between 2.7 and 3.6.
 * If you are using the GPU version of this library, please ensure that your GPU drivers are correctly installed and up to date. Please reference [GPU Support for Tensorflow-GPU](https://www.tensorflow.org/install/gpu) for further details on GPU setup. 
+* Input MRI images must have 3D structure and saved in .nii or .nii.gz format.
 
 ### Installation
 
@@ -39,7 +40,9 @@ pip install deepdefacer[tf_gpu] / pip3 install deepdefacer[tf_gpu]
 
 ### Usage and Examples
 
-Once installed, please type ```deepdefacer --help``` into your terminal window to see a list of available capabilities. Defacing a 3D MRI image is extremely simple, and can be done as follows:
+Once installed, please type ```deepdefacer --help``` into your terminal window to see a list of available tools from this program. Defacing a 3D MRI image is extremely simple, and can be done with the following command:
 
- ```deepdefacer <filename, in .nii or .nii.gz format> ```
+ ```deepdefacer <input filename> ```
+ 
+ The program will output a defaced image in the **same directory as the input file.** 
 
