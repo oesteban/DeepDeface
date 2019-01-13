@@ -35,4 +35,4 @@ GPU Support
 pip install deepdefacer[tf_gpu] / pip3 install deepdefacer[tf_gpu]
 ```
 
-**Note: If you are using a ZSH-type shell, you may need to wrap the package name in quotations in order to successfully install it. (e.g pip install "deepdefacer[tf_gpu]"). 
+**Note: If you are using a ZSH-type shell, you may need to wrap the package name in quotations in order to successfully install it. (e.g ```pip install "deepdefacer[tf_gpu]```).**
