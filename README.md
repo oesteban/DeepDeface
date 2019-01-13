@@ -1,7 +1,8 @@
 ## DeepDefacer: Automatic Removal of Facial Features via Deep Learning.
  
  <div align="center">
-<img style="float: center;" src="diffsizedefaced2.png">
+<img style="float: center;" src="diffsizedefaced2.png"> <img style="float: center;" src="diffsizeundefaced.png">
+
 </div>
 
 DeepDefacer is a MRI anonymization tool written in Python, on top of Tensorflow and Keras, that was developed in partnership with the Poldrack Lab at Stanford University. It can be used to quickly deface 3D MRI images of any resolution and size on commercial CPUs and GPUs. Its goal is to provide the community with an easy to use and efficient tool for defacing medical images that require anonymization for compliance with federal privacy laws (e.g HIPAA). 
