@@ -8,8 +8,8 @@ If you use DeepDefacer in your work, please refer to this citation for the curre
 ```
 @article{anishkhazane2019,
   title={DeepDefacer: Automatic Removal of Facial Features from MR Scans Via Deep Learning},
-  author={Anish K. Khazane, Julien Hoachuck, Dr. Chris Gorgowelski, Dr. Russell Poldrack},
-  journal={arXiv preprint, in proceedings},
+  author={Anish Khazane, Julien Hoachuck, Dr. Chris Gorgowelski, Dr. Russell Poldrack},
+  journal={in proceedings, arXiv preprint},
   year={2019}
 }
 ```
