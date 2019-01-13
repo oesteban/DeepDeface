@@ -18,7 +18,7 @@ If you use any of the model logic from the [ARFF-CNN](https://github.com/AKhazan
 
 ### Requirements 
 
-* Any version between Python 2.7 ---- Python 3.6
+* Any Python version between 2.7 and 3.6.
 * If you are using the GPU version of this library, please ensure that your GPU drivers are correctly installed and up to date. Please reference [GPU Support for Tensorflow-GPU](https://www.tensorflow.org/install/gpu) for further details on GPU setup. 
 
 ### Installation and Usage
