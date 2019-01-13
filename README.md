@@ -1,6 +1,6 @@
 ## DeepDefacer: Automatic Removal of Facial Features via Deep Learning.
   
-DeepDefacer is a MRI anonymization tool written in Python, on top of Tensorflow and Keras, that was developed in partnership with the Poldrack Lab at Stanford University. It can be used to quickly deface MRI images of any resolution and size on commercial CPUs or GPUs. Its goal is to provide the community with an easy to use and efficient tool for defacing medical images that require anonymization for compliance with federal privacy laws (e.g HIPAA). 
+DeepDefacer is a MRI anonymization tool written in Python, on top of Tensorflow and Keras, that was developed in partnership with the Poldrack Lab at Stanford University. It can be used to quickly deface 3D MRI images of any resolution and size on commercial CPUs or GPUs. Its goal is to provide the community with an easy to use and efficient tool for defacing medical images that require anonymization for compliance with federal privacy laws (e.g HIPAA). 
 
 ### Referencing and citing DeepDefacer
 If you use DeepDefacer in your work, please refer to this citation for the current version:
@@ -21,7 +21,7 @@ If you use any of the model logic from the [ARFF-CNN](https://github.com/AKhazan
 * Any Python version between 2.7 and 3.6.
 * If you are using the GPU version of this library, please ensure that your GPU drivers are correctly installed and up to date. Please reference [GPU Support for Tensorflow-GPU](https://www.tensorflow.org/install/gpu) for further details on GPU setup. 
 
-### Installation and Usage
+### Installation
 
 Deepdefacer can be easily installed on any operating system via Pypi. There are two versions of this package; CPU or GPU support. Please enter **one** of the following commands into your terminal window to begin installation, depending on your system specifications and desired python version. 
 
@@ -36,3 +36,10 @@ pip install deepdefacer[tf_gpu] / pip3 install deepdefacer[tf_gpu]
 ```
 
 **Note: If you are using a ZSH-type shell, you may need to wrap the package name in quotations in order to successfully install it. (e.g ```pip install "deepdefacer[tf_gpu]"```).**
+
+### Usage and Examples
+
+Once installed, please type ```deepdefacer --help``` into your terminal window to see a list of available capabilities. Defacing a 3D MRI image is extremely simple, and can be done as follows:
+
+ ```deepdefacer <filename, in .nii or .nii.gz format> ```
+
