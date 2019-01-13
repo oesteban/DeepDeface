@@ -1,4 +1,4 @@
-## DeepDefacer: Automatic Removal of Facial Features via Deep Learning.
+<center> ## DeepDefacer: Automatic Removal of Facial Features via Deep Learning. </center>
  
  <div align="center">
 <img style="float:center;margin:0px" src="diffsizeundefaced.png"> <img style="float: center;" src="exampledefacedresized.png"> 
