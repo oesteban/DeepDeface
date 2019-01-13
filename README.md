@@ -15,4 +15,12 @@ If you use DeepDefacer in your work, please refer to this citation for the curre
 ```
 If you use any of the model logic from the [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git), please also use the citation above to comply with its authors' instructions on referencing.
 
+
+### Requirements 
+
+* Any version between Python 2.7 ---- Python 3.6
+* If you are using the GPU version of this library, please ensure that your GPU drivers are correctly installed and up to date. Please reference [GPU Support for Tensorflor-GPU](https://www.tensorflow.org/install/gpu) for further details on GPU setup. 
+
 ### Installation and Usage
+
+Deepdefacer can be easily installed on any operating system via Pypi. Please 
