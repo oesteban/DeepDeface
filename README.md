@@ -13,3 +13,6 @@ If you use DeepDefacer in your work, please refer to this citation for the curre
   year={2019}
 }
 ```
+If you use any model logic from the [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git), please also use the citation above to comply with its authors' instructions on referencing.
+
+### Installation and Usage
