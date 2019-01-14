@@ -1,7 +1,7 @@
 ## DeepDefacer: Automatic Removal of Facial Features via Deep Learning.
  
  <div align="center">
-<img style="float:center;margin:0px" src="diffsizeundefaced.png"> <img style="float: center;" src="exampledefacedresized.png"> 
+<img style="float:center;margin:0px" src="images/diffsizeundefaced.png"> --------> <img style="float: center;" src="images/exampledefacedresized.png"> 
 </div>
 
 DeepDefacer is a MRI anonymization tool written in Python, on top of Tensorflow and Keras, that was developed in partnership with the Poldrack Lab at Stanford University. It can be used to quickly deface 3D MRI images of any resolution and size on commercial CPUs and GPUs. Its goal is to provide the community with an easy to use and efficient tool for defacing medical images that require anonymization for compliance with federal privacy laws (e.g HIPAA). 
@@ -44,9 +44,11 @@ pip install deepdefacer[tf_gpu] / pip3 install deepdefacer[tf_gpu]
 
 ### Usage and Documentation
 
-Once installed, please enter ```deepdefacer --help``` into your terminal window to see a list of available tools within this program. Defacing a 3D MRI image is extremely simple, and can be done with the following command:
+Once installed, please enter `deepdefacer --help` into your terminal window to see a list of available options for this program. Defacing a 3D MRI image is extremely simple, and can be done with the following command:
 
- ```deepdefacer <input filename> ```
+ ```deepdefacer --input_file <input filename> ```
  
- The program will output a defaced image in the **same directory as the input file.** 
+ The program will output a defaced image in the same directory as the input file, unless `--defaced_output_path` is specified. 
+ 
+ You can also save the predicted mask for any MRI image by specifying the desired output filename and directory with the `--mask_output_path` option. 
 
