@@ -52,3 +52,10 @@ Once installed, please enter `deepdefacer --help` into your terminal window to s
  
  You can also save the predicted mask for any MRI image by specifying the desired output filename and directory with the `--mask_output_path` option. 
 
+### Contributing to DeepDefacer
+
+If you are interested in learning more about the model architecture that powers DeepDefacer, please view the files within t[ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git). We welcome any contributions to this codebase (whether it be a more robust model, package options, etc). If you are particularly interested in modifying the model architecture, please reivew the following steps:
+
+1. Clone [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git)
+2. Store data (MRI Images, volumetric or 2D in nature) within a directory named `data` in the same directory as ARFF-CNN. 
+3. Execute `python train.py` and the model will begin training for a single epoch. The model weights and graph will be stored in a `.hdf5` file in the same directory as ARFF-CNN.
