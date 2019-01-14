@@ -57,7 +57,7 @@ Once installed, please enter `deepdefacer --help` into your terminal window to s
 If you are interested in learning more about the model architecture that powers DeepDefacer, please view the files within [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git). We welcome any contributions to this codebase (whether it be a more robust model, package options, etc). If you are particularly interested in modifying the model architecture, please reivew the following steps:
 
 1. Clone [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git)
-2. Store data (MRI Images, volumetric or 2D in nature) within a directory named `data` in the same directory as ARFF-CNN. 
+2. Store data (MRI Images, volumetric or 2D in nature) within a directory named `data` in the same file location as ARFF-CNN. 
 3. Execute `python train.py` and the model will begin training for a single epoch. The model weights and graph will be stored in a `hdf5` file in the same directory as ARFF-CNN.
 
 **Please note that ARFF-CNN is not fully integrated with a robust argparser command-line utility tool. This package is currently being updated to support more command-line arguments for easier usage**.
