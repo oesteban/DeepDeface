@@ -54,7 +54,7 @@ Once installed, please enter `deepdefacer --help` into your terminal window to s
 
 ### Contributing to DeepDefacer
 
-If you are interested in learning more about the model architecture that powers DeepDefacer, please view the files within [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git), or re-visit this repository in the next few weeks to view our published manuscript on this work. We welcome any contributions to this codebase (whether it be a more robust model, package options, etc). If you are particularly interested in re-training DeepDefacer, please reivew the following steps:
+If you are interested in learning more about the model architecture that powers DeepDefacer, please view the files within [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git), or re-visit this repository in the next few weeks to view our published manuscript on this work. We welcome any contributions to this codebase (whether it be a more robust model, package options, etc). If you are particularly interested in re-training DeepDefacer, please review the following steps:
 
 1. Clone [ARFF-CNN](https://github.com/AKhazane/ARFF-CNN.git)
 2. Store data (MRI Images, volumetric or 2D in nature) within a directory named `data` in the same file location as ARFF-CNN. 
