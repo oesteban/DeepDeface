@@ -2,21 +2,19 @@ import os
 import sys
 import numpy as np
 import nibabel as nib
-import pdb
-import os
 import argparse
 
 from termcolor import colored
 
 
 try:
-    from keras.models import *
+    from keras.models import load_model
 except Exception as e:
     print(e)
     print('-' * 100)
-    print(colored("""ERROR: Failed to initialize tensorflow and Keras. 
-       If you are using deepdefacer[tf-gpu], please make 
-       sure that your CUDA and NVIDIA drivers are properly 
+    print(colored("""ERROR: Failed to initialize tensorflow and Keras.
+       If you are using deepdefacer[tf-gpu], please make
+       sure that your CUDA and NVIDIA drivers are properly
        installed.""", 'red'))
     print('-' * 100)
     sys.exit(1)
@@ -28,11 +26,13 @@ from .defacer_utils import (
     resample_image
 )
 
+
 class MyParser(argparse.ArgumentParser):
     def error(self, message):
         sys.stderr.write(colored('error: %s!\n' % message, 'red'))
         self.print_help()
         sys.exit(2)
+
 
 def deface_3D_MRI():
 
@@ -77,7 +77,7 @@ def deface_3D_MRI():
     path_to_module = os.path.dirname(__file__)
     model_file_path = os.path.join(path_to_module, "model.hdf5")
 
-    deepdeface_model = load_model(model_file_path, 
+    deepdeface_model = load_model(model_file_path,
                                  custom_objects={'dice_coefficient': dice_coefficient})
 
     print('-' * 100)
@@ -88,14 +88,13 @@ def deface_3D_MRI():
     mask_prediction[mask_prediction < 0.5] = 0
     mask_prediction[mask_prediction >= 0.5] = 1
 
-
     mask_prediction = np.squeeze(mask_prediction)
 
-    mask_prediction = resample_image(mask_prediction, 
+    mask_prediction = resample_image(mask_prediction,
                                     specified_shape=MRI_image_shape, mask=True)
 
     if args.mask_output_path:
-        print(colored('Successfully created mask! Saving to %s...' % 
+        print(colored('Successfully created mask! Saving to %s...' %
                       (args.mask_output_path), 'cyan'))
         mask_save = nib.Nifti1Image(mask_prediction, nib.load(MRI_image_path).affine)
         nib.save(mask_save, args.mask_output_path)
@@ -116,7 +115,7 @@ def deface_3D_MRI():
         output_file = os.path.splitext(os.path.splitext(
             os.path.basename(MRI_image_path))[0])[0] + '_defaced.nii.gz'
 
-    print(colored('Successfully defaced image! Saving to %s...' % 
+    print(colored('Successfully defaced image! Saving to %s...' %
                    (output_file), 'cyan'))
 
     nib.save(masked_image_resampled, output_file)

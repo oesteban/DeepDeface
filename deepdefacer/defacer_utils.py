@@ -1,8 +1,6 @@
 import numpy as np
 import nibabel as nib
 import SimpleITK as sitk
-import pdb
-import math 
 import os
 
 from termcolor import colored
@@ -20,9 +18,6 @@ except Exception as e:
        installed.""", 'red'))
    print('-' * 100)
    sys.exit(1)
-
-from nilearn.image import resample_img
-
 
 def dice_coefficient(y_true, y_pred, smooth=1.):
     y_true_f = K.flatten(y_true)
@@ -49,10 +44,7 @@ def resample_image(nifti_img, specified_shape, mask=False):
         nib.save(revised_nifti, nifti_img) 
         img = sitk.ReadImage(nifti_img)
 
-
-    shape = img_data.shape
     dimension = img.GetDimension() 
-    target_shape = specified_shape
 
     reference_physical_size = np.zeros(dimension)
     reference_physical_size[:] = [(sz-1)*spc if sz*spc>mx  else mx for sz,spc,mx in
@@ -92,8 +84,6 @@ def resample_image(nifti_img, specified_shape, mask=False):
 
 
 def pre_process_image(img_file):
-
-    nifti_data = np.squeeze(nib.load(img_file).get_data())
 
     optimal_dims = [160, 160, 160]
 
