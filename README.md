@@ -60,4 +60,4 @@ If you are interested in learning more about the model architecture that powers 
 2. Store data (MRI Images, volumetric or 2D in nature) within a directory named `data` in the same directory as ARFF-CNN. 
 3. Execute `python train.py` and the model will begin training for a single epoch. The model weights and graph will be stored in a `hdf5` file in the same directory as ARFF-CNN.
 
-**Please note that ARFF-CNN is currently not following a robust package structure. This package is currently being updated to support more command-line arguments for easier usage**.
+**Please note that ARFF-CNN is not fully integrated with a robust argparser command-line utility tool. This package is currently being updated to support more command-line arguments for easier usage**.
