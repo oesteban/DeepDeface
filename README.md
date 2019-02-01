@@ -13,6 +13,7 @@ If you use DeepDefacer in your work, please refer to this citation for the curre
 @article{khazane2019state,
   title={DeepDefacer: Automatic Removal of Facial Features from MR Scans Via U-Net Image Segmentation},
   author={Anish Khazane, Julien Hoachuck, Krzysztof J. Gorgolewski, Russell A. Poldrack},
+  organization={Stanford Center for Reproducible Neuroscience}
   journal={in proceedings, arXiv preprint},
   year={2019}
 }
